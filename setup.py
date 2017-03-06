@@ -8,8 +8,8 @@ except ImportError:
 config = {
     'description': 'Can we do more kazoo?',
     'author': 'Johannes Hofmeister',
-    'url': 'https://github.com/cessor/kazoo',
-    'download_url': 'https://github.com/cessor/kazoo',
+    'url': 'https://github.com/cessor/kazookid',
+    'download_url': 'https://github.com/cessor/kazookid',
     'author_email': '',
     'version': '1.0',
     'tests_require': ['nose'],
