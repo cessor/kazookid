@@ -1,5 +1,5 @@
 from nose.tools import *
-from kazoo import Substitute
+from kazookid import Substitute
 
 
 def test_substitute():

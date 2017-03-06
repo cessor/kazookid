@@ -1,25 +1,49 @@
-
 class Substitute(object):
-
     '''
     Substitutes are can be used to provide or verify
-    direct and indirect input and output of classes.
+    direct and indirect input and output of objects
+    during testing.
 
-    # Test Spy:
+    See: http://xunitpatterns.com/
 
-    def test_spy():
-        engine = Substitute()
-        game = Game(engine)
-        assert_true(engine.render.was_called)
+    Test Spy
+    ========
+
+    Test Spies capture indirect output
+    http://xunitpatterns.com/Test%20Spy.html
+
+    # Check if a method was called
+
+        from kazookid import Substitute
+
+        def test_spy():
+            engine = Substitute()
+            game = Game(engine)
+            game.run()
+            assert_true(engine.render.was_called)
+
+    # Check on parameters
+
+        def test_spy():
+            engine = Substitute()
+            game = Game(engine)
+            game.run()
+            assert_true(engine.render.was_called_with(time))
 
 
-    def test_spy():
-        engine = Substitute()
-        game = Game(engine)
-        assert_true(engine.render.was_called_with(time))
+    Test Stub
+    =========
 
-    substitute.method.returns(1)
+    Stubs feed indirect input into the System under Test
+    http://xunitpatterns.com/Test%20Stub.html
 
+    # To provide indirect input:
+
+        substitute.value = 5
+
+        substitute.method.returns(1)
+
+        substitute.method.raises(Exception)
     '''
 
     def __init__(self):
@@ -34,10 +58,9 @@ class Substitute(object):
 
 
 class Call(object):
-
-    '''Intercepts a call or method on a substitute object
     '''
-
+    Intercepts a call or method on a substitute object
+    '''
     def __init__(self, name, parent):
         self.name = name
         self.parent = parent

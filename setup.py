@@ -13,9 +13,9 @@ config = {
     'author_email': '',
     'version': '1.0',
     'tests_require': ['nose'],
-    'packages': ['kazoo'],
+    'packages': ['kazookid'],
     'scripts': [],
-    'name': 'kazoo'
+    'name': 'kazookid'
 }
 
 setup(**config)
