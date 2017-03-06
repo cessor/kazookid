@@ -11,7 +11,7 @@ config = {
     'url': 'https://github.com/cessor/kazookid',
     'download_url': 'https://github.com/cessor/kazookid',
     'author_email': '',
-    'version': '1.0',
+    'version': '1.1',
     'tests_require': ['nose'],
     'packages': ['kazookid'],
     'scripts': [],

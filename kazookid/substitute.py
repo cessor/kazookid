@@ -1,4 +1,5 @@
 class Substitute(object):
+
     '''
     Substitutes are can be used to provide or verify
     direct and indirect input and output of objects
@@ -57,10 +58,20 @@ class Substitute(object):
         return config[name]
 
 
+class Context(Substitute):
+    def __enter__(self, *args, **kwargs):
+        return self
+
+    def __exit__(self, *args, **kwargs):
+        pass
+
+
 class Call(object):
+
     '''
     Intercepts a call or method on a substitute object
     '''
+
     def __init__(self, name, parent):
         self.name = name
         self.parent = parent
