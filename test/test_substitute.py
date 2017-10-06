@@ -78,3 +78,10 @@ def test_call_method_can_raise_an_exception():
     substitute = Substitute()
     substitute.method.raises(Apology)
     substitute.method()
+
+
+def test_yields():
+    '''Substitute: How to provide data for iteration'''
+    substitute = Substitute()
+    substitute.yields(['a', 'b', 'c'])
+    assert_equal(list(substitute), ['a', 'b', 'c'])

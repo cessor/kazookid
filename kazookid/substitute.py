@@ -50,15 +50,23 @@ class Substitute(object):
     def __init__(self):
         self._calls = {}
         self._config = {}
+        self._iterator = Iterator()
 
     def __getattr__(self, name):
+        if name == 'yields':
+            return self._iterator
+
         config = self.__dict__['_config']
         call = Call(name=name, parent=self)
         config[name] = config.get(name, call)
         return config[name]
 
+    def __iter__(self):
+        return self._iterator.__iter__()
+
 
 class Context(Substitute):
+
     def __enter__(self, *args, **kwargs):
         return self
 
@@ -109,3 +117,15 @@ class Call(object):
         if len(args) == 1:
             args = args[0]
         return self.was_called and self.args == args
+
+
+class Iterator(object):
+
+    def __init__(self):
+        self._items = []
+
+    def __iter__(self):
+        return self._items.__iter__()
+
+    def __call__(self, items):
+        self._items = items
