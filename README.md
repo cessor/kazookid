@@ -10,7 +10,7 @@ path = Substitute()
 program = Program(path)
 program.save('content')
 
-assert_true(path.write_text.was_called_with(content))
+assert_true(path.write_text.was_called_with('content'))
 ```
 
 
