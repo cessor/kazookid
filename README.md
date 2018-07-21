@@ -43,13 +43,13 @@ from kazookid import pretend
 path = pretend()
 ```
 
-Then, you configure what the substitute should do:
+Then you configure what the substitute should do:
 
 ```
 path.read_text.returns('content')
 ```
 
-Then you pass the object to the actual component, that you would like to test:
+Then you pass the object to the actual component that you would like to test:
 
 ```
 # Arrange
@@ -57,24 +57,27 @@ path = pretend()
 path.read_text.returns('1 2 3 4')
 
 # System under Test
-# Lines implements an iterator.
+# SquareNumbers implements an iterator.
 square_numbers = SquareNumbers(read_from=path)
 
 # Act
-assert_equal(list(square_numbers), [1, 4, 9, 16])
+result = list(square_numbers)
+
+# Assert
+assert_equal(result, [1, 4, 9, 16])
 ```
 
 Examples
 --------
 
- - [How to create a Substitute?](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L5)
- - [How to call a method on a substitute?](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L17)
+ - [How to create a Substitute](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L5)
+ - [How to call a method on a substitute](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L17)
  - [How to provide data from a method](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L55)
  - [How to provide data from a property](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L64)
 
- - [How to verify that a method was called?](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L24)
- - [How to verify that a method was called with specific arguments?](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L32)
- - [How to intercept the arguments of a call?](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L41)
+ - [How to verify that a method was called](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L24)
+ - [How to verify that a method was called with specific arguments](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L32)
+ - [How to intercept the arguments of a call](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L41)
 
  - [How to raise exceptions](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L83)
  - [How to provide data for iteration](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L90)
