@@ -46,7 +46,7 @@ def test_call_intercepts_single_argument():
 
 
 def test_call_intercepts_many_arguments():
-    '''Substitute: If a call had many arguments, they are returned as a tuple'''
+    '''Substitute: When a call had many arguments, they are returned as a tuple'''
     substitute = Substitute()
     data = substitute.method('hello', 1, 2, 3)
     assert_equal(substitute.method.args, ('hello', 1, 2, 3))

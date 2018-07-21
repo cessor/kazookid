@@ -83,7 +83,7 @@ Examples
  - [How to provide data for iteration](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L90)
 
  - [Properties containing functions are methods](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L71)
- - [If a call had many arguments, they are returned as a tuple](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L48)
+ - [When a call had many arguments, they are returned as a tuple](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L48)
 
 There is also a substitute for context managers:
 
