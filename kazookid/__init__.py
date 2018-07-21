@@ -1,2 +1,8 @@
 from .substitute import Context, Substitute
-__all__ = ['Context', 'Substitute']
+
+
+def pretend():
+    return Substitute()
+
+
+__all__ = ['Context', 'Substitute', 'pretend']

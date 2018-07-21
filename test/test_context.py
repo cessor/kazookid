@@ -6,6 +6,7 @@ def test_context_manager():
     '''Context: How to create a Context'''
     assert_true(Context())
 
+
 def test_can_enter_and_exit_a_context():
     '''Context: Can Enter a Context'''
     with Context() as context:

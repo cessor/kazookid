@@ -10,7 +10,7 @@ config = {
     'author': 'Johannes Hofmeister',
     'url': 'https://github.com/cessor/kazookid',
     'download_url': 'https://github.com/cessor/kazookid',
-    'author_email': '',
+    'author_email': 'py_kazookid@spam.cessor.de',
     'version': '1.1',
     'tests_require': ['nose'],
     'packages': ['kazookid'],

@@ -1,11 +1,17 @@
 from nose.tools import *
-from kazookid import Substitute
+from kazookid import Substitute, pretend
 
 
 def test_substitute():
     '''Substitute: How to create a Substitute'''
     substitute = Substitute()
     assert_false(substitute.method.was_called)
+
+
+def test_pretend():
+    '''Substitute: The kazookid likes to play pretend'''
+    substitute = pretend()
+    assert_true(isinstance(substitute, Substitute))
 
 
 def test_call_method_returns_none():
@@ -40,7 +46,7 @@ def test_call_intercepts_single_argument():
 
 
 def test_call_intercepts_many_arguments():
-    '''Substitute: If a call had many aruments, they are returned as a tuple'''
+    '''Substitute: If a call had many arguments, they are returned as a tuple'''
     substitute = Substitute()
     data = substitute.method('hello', 1, 2, 3)
     assert_equal(substitute.method.args, ('hello', 1, 2, 3))
@@ -63,7 +69,7 @@ def test_set_substitute_property():
 
 
 def test_set_substitute_method():
-    '''Substitute: Properties containing functions behave as such'''
+    '''Substitute: Properties containing functions are methods'''
     substitute = Substitute()
     substitute.name = lambda: 1
     assert_equal(substitute.name(), 1)
@@ -71,6 +77,7 @@ def test_set_substitute_method():
 
 class Apology(Exception):
     pass
+
 
 @raises(Apology)
 def test_call_method_can_raise_an_exception():
