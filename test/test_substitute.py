@@ -214,3 +214,16 @@ def test_yields():
 
     # Assert
     assert_equal(result, ['a', 'b', 'c'])
+
+
+def test_call_intercepts_argument_tuples():
+
+    # System under Test
+    substitute = Substitute()
+
+    # Act: Run
+    substitute.method(0, [])
+
+    # Assert
+    assert_equal(substitute.method.args, (0, []))
+    assert_true(substitute.method.was_called_with(0, []))

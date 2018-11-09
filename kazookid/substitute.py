@@ -164,7 +164,8 @@ class Call(object):
         '''
         Returns whether this call was invoked with these ```arguments```.
         '''
-        return self._unpack(args) in self.args
+        args = self._unpack(args)
+        return (args == self.args) or (args in self.args)
 
 
 class Iterator(object):
