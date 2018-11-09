@@ -6,12 +6,12 @@ except ImportError:
     from distutils.core import setup
 
 config = {
-    'description': 'Can we do more kazoo?',
-    'author': 'Johannes Hofmeister',
+    'description': 'A simple and friendly mocking framework. Can we do more kazoo?',
+    'author': 'Johannes C. Hofmeister',
     'url': 'https://github.com/cessor/kazookid',
     'download_url': 'https://github.com/cessor/kazookid',
     'author_email': 'py_kazookid@spam.cessor.de',
-    'version': '1.1',
+    'version': '1.2',
     'tests_require': ['nose'],
     'packages': ['kazookid'],
     'scripts': [],

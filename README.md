@@ -70,20 +70,28 @@ assert_equal(result, [1, 4, 9, 16])
 Examples
 --------
 
+### Creating a Substitute
+
  - [How to create a Substitute](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L5)
- - [How to call a method on a substitute](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L17)
- - [How to provide data from a method](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L55)
- - [How to provide data from a property](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L64)
+ - [How to call a method on a substitute](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L31)
+ - [How to provide data from a method](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L99)
+ - [How to provide data from a property](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L115)
 
- - [How to verify that a method was called](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L24)
- - [How to verify that a method was called with specific arguments](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L32)
- - [How to intercept the arguments of a call](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L41)
+### Verifying that a method was called
 
- - [How to raise exceptions](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L83)
- - [How to provide data for iteration](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L90)
+ - [How to verify that a method was called](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L44)
+ - [How to verify that a method was called with specific arguments](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L58)
+ - [How to intercept the arguments of a call](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L75)
 
- - [Properties containing functions are methods](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L71)
- - [When a call had many arguments, they are returned as a tuple](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L48)
+### Providing indirect inputs
+
+ - [How to raise exceptions](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L152)
+ - [How to provide data for iteration](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L167)
+
+### Implementation details
+
+ - [Properties containing functions are methods](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L131)
+ - [When a call had many arguments, they are returned as a tuple](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L87)
 
 There is also a substitute for context managers:
 
