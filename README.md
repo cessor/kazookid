@@ -74,24 +74,23 @@ Examples
 
  - [How to create a Substitute](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L5)
  - [How to call a method on a substitute](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L31)
- - [How to provide data from a method](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L99)
- - [How to provide data from a property](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L115)
+ - [How to provide data from a property](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L151)
+ - [How to provide data from a method](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L135)
+ - [How to provide data for iteration](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L203)
+ - [How to raise exceptions](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L188)
 
 ### Verifying that a method was called
 
+ - [How to intercept the arguments of a call](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L109)
  - [How to verify that a method was called](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L44)
- - [How to verify that a method was called with specific arguments](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L58)
- - [How to intercept the arguments of a call](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L75)
-
-### Providing indirect inputs
-
- - [How to raise exceptions](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L152)
- - [How to provide data for iteration](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L167)
+ - [How to verify that a method was called several times](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L58)
+ - [How to verify that a method was called with specific arguments](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L77)
 
 ### Implementation details
 
- - [Properties containing functions are methods](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L131)
- - [When a call had many arguments, they are returned as a tuple](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L87)
+ - [Properties containing functions are methods](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L167)
+ - [When a call had many arguments, they are returned as a tuple](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L122)
+ - [When a method was called several times, all arguments are stored](https://github.com/cessor/kazookid/blob/master/test/test_substitute.py#L94)
 
 There is also a substitute for context managers:
 
