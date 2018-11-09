@@ -55,6 +55,25 @@ def test_call_method_on_substitute():
     assert_false(substitute.other_method.was_called)
 
 
+def test_calls_are_counted():
+    '''Substitute: How to verify that a method was called several times'''
+
+    # System under Test
+    substitute = Substitute()
+
+    # Arrange
+    substitute.method()
+    assert_true(substitute.method.was_called)
+    assert_false(substitute.method.was_called_times(2))
+
+    # Act: Run
+    substitute.method()
+
+    # Assert
+    assert_true(substitute.method.was_called)
+    assert_true(substitute.method.was_called_times(2))
+
+
 def test_call_intercepts_asserts_arguments():
     '''Substitute: How to verify that a method was called with specific arguments'''
 
@@ -70,6 +89,21 @@ def test_call_intercepts_asserts_arguments():
     # Assert
     assert_true(substitute.method.was_called_with('hello'))
     assert_false(substitute.method.was_called_with('bye'))
+
+
+def test_call_intercepts_several_arguments():
+    '''Substitute: When a method was called several times, all arguments are stored'''
+
+    # System under Test
+    substitute = Substitute()
+
+    # Act: Run
+    substitute.method('hello')
+    substitute.method('bye')
+
+    # Assert
+    assert_true(substitute.method.was_called_with('hello'))
+    assert_true(substitute.method.was_called_with('bye'))
 
 
 def test_call_intercepts_single_argument():

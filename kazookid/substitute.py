@@ -75,7 +75,6 @@ class Context(Substitute):
 
 
 class Call(object):
-
     '''
     Intercepts a call or method on a substitute object
     '''
@@ -90,33 +89,82 @@ class Call(object):
         if self.exception:
             raise self.exception()
 
-        self.parent._calls[self.name] = (args, kwargs)
+        # Calls are registered by
+        # appending the arguments passed to this method
+        # to the substitute
+        self.parent._calls.setdefault(self.name, []).append((args, kwargs))
+
         try:
             return self.return_value[0]
         except:
             return None
 
+    def _number_of_calls(self):
+        '''
+        Returns how many times this call was invoked
+        '''
+        return len(self.parent._calls.get(self.name, []))
+
+    def _unpack(self, items):
+        '''
+        Convenience method: If a collection contains only a singular item,
+        that item is returned instead of the list, e.g.:
+        self._unpack([1]) --> 1
+        self._unpack((1,)) --> 1
+        self._unpack([1,2,3]) --> [1,2,3]
+        '''
+        return items[-1] if len(items) == 1 else items
+
     @property
     def args(self):
-        args, kwargs = self.parent._calls.get(self.name, (None, None))
-        if len(args) == 1:
-            return args[0]
-        return args
+        '''
+        Returns the arguments this call was invoked with.
+        '''
+
+        # Arguments are stored internally in tuples with (args, kwargs)
+        # For convenience, if only one argument was passed,
+        # this single argument is unwrapped from the tuple and returned.
+
+        calls = self.parent._calls.get(self.name, [])
+
+        # Unpack, if single call
+        if len(calls) == 1:
+            args, kwargs = calls[-1]
+            return self._unpack(args)
+
+        # Return all recorded arguments
+        return [self._unpack(args) for args, kwargs in calls]
 
     def raises(self, exception):
+        '''
+        Configure this call to raise an exeption
+        '''
         self.exception = exception
 
     def returns(self, *args, **kwargs):
+        '''
+        Configure this call to return some data
+        '''
         self.return_value = args
 
     @property
     def was_called(self):
-        return self.name in self.parent._calls
+        '''
+        Returns whether this call was invoked at least once.
+        '''
+        return self._number_of_calls() > 0
 
-    def was_called_with(self, *args):
-        if len(args) == 1:
-            args = args[0]
-        return self.was_called and self.args == args
+    def was_called_times(self, times):
+        '''
+        Returns whether this call was invoked exactly ```times```.
+        '''
+        return self._number_of_calls() == times
+
+    def was_called_with(self, *args, **kwargs):
+        '''
+        Returns whether this call was invoked with these ```arguments```.
+        '''
+        return self._unpack(args) in self.args
 
 
 class Iterator(object):
