@@ -52,12 +52,23 @@ class Substitute(object):
         self._config = {}
         self._iterator = Iterator()
         self._dict = {}
+        self._dict_default_configured = False
+        self._dict_default = None
+
+    def setdefault(self, value):
+        self._dict_default = value
+        self._dict_default_configured = True
 
     def __setitem__(self, key, value):
         self._dict[key] = value
 
     def __getitem__(self, key):
-        return self._dict[key]
+        try:
+            return self._dict[key]
+        except KeyError:
+            if self._dict_default_configured:
+                return self._dict_default
+            raise
 
     def __getattr__(self, name):
         if name == 'yields':
@@ -83,7 +94,7 @@ class Context(Substitute):
 
 class Call(object):
     '''
-    Intercepts a call or method on a substitute object
+    Intercepts method call on a substitute object
     '''
 
     def __init__(self, name, parent):
@@ -95,27 +106,40 @@ class Call(object):
     def __call__(self, *args, **kwargs):
 
         if self.exception:
-            # Todo: This constructs a new exception by calling the
-            # object as a function, but often
-            # it is better to configure the exception beforehand
-            # and then just have the configured object raised.
-            # This line here assumes the exception has an empty ctor
-            # which is limiting in many tests...
+            # Todo: This constructs a new exception by calling the object as a
+            # function, but often it is better to configure the exception
+            # beforehand and then just have the configured object raised.
+            # This line here assumes the exception has an empty ctor which is
+            # limiting in many tests...
             raise self.exception()
 
-        # Calls are registered by
-        # appending the arguments passed to this method
-        # to the substitute
+        # Calls are registered by appending the arguments passed to this
+        # method to the substitute
         self.parent._calls.setdefault(self.name, []).append((args, kwargs))
 
+        if self.name == 'get' and args:
+            # Handle dict.get
+            # https://docs.python.org/3.7/library/stdtypes.html#dict.get
+
+            # If this call was configured normally using
+            # ```Substitute.get.returns(<return_value>)```
+            # then the return value should be returned, as this
+            # explicit configuration should override default behavior
+            if self.return_value:
+                return self.return_value
+
+            # If not return value was given,
+            # the user probably substitutes a Dictionary object with
+            # ```Substitute['key'] = <return_value>```
+            # so we delegate to the parent.
+            #
+            # The latter ensures that both
+            # ```Substitute['key']``` and ```Substitute.get('key')```
+            # return the same date, if Subsitute.get was not overridden
+            return self.parent._dict.get(*args)
+
         try:
-            # Todo: Not sure if this is sensible.
-            # Should I only ever return [0] here?
-            # I know I am limiting the scope of this tool
-            # but is this meaningful? God I should write
-            # more comments about my decisions - JCNH, 15.11.2018
-            # PS: At least it's tested.
-            return self.return_value[0]
+            return self.return_value
         except:
             return None
 
@@ -166,12 +190,11 @@ class Call(object):
         # ```TypeError: exceptions must derive from BaseException```
         self.exception = exception
 
-    def returns(self, *args, **kwargs):
+    def returns(self, return_value):
         '''
         Configure this call to return some data
         '''
-        # Todo: Deal with kwargs
-        self.return_value = args
+        self.return_value = return_value
 
     @property
     def was_called(self):

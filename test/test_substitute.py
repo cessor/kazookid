@@ -286,7 +286,7 @@ def test_substitute_dictionaries_can_use_get_normally():
     assert_equal(actual_value, 42)
 
 
-def test_substitute_dictionaries_return_confiured_dictionary_values():
+def test_substitute_dictionaries_return_configured_dictionary_values():
     '''Substitute: dict.get returns values configured by __setitem__'''
 
     # Arrange
@@ -316,8 +316,41 @@ def test_substitute_dictionaries_but_only_if_configured():
     # System under Test
     substitute = Substitute()
 
-    # Act: Run
-    actual_value = substitute.get('key', None)
+    # Act: Run, No Default
+    actual_value = substitute.get('key')
 
     # Assert
     assert_equal(actual_value, None)
+
+    # Act: Run, With Default
+    actual_value = substitute.get('key', 1)
+
+    # Assert
+    assert_equal(actual_value, 1)
+
+
+def test_substitute_dictionaries_can_have_defaults():
+    '''Substitute: How to configure dictionary default values'''
+    # Arrange
+    key = 'key'
+    value = 42
+
+    # System under Test
+    substitute = Substitute()
+
+    # Act: Configure
+    substitute.setdefault("DEFAULT")
+    substitute[key] = value
+
+    # Act: Run
+    actual_value = substitute['key']
+
+    # Assert
+    assert_equal(actual_value, 42)
+
+
+    # Act: Run
+    actual_value = substitute['inexistent_key']
+
+    # Assert --> Default
+    assert_equal(actual_value, "DEFAULT")
