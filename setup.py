@@ -5,13 +5,15 @@ try:
 except ImportError:
     from distutils.core import setup
 
+import kazookid
+
 config = {
     'description': 'A simple and friendly mocking framework. Can we do more kazoo?',
     'author': 'Johannes C. Hofmeister',
     'url': 'https://github.com/cessor/kazookid',
     'download_url': 'https://github.com/cessor/kazookid',
     'author_email': 'py_kazookid@spam.cessor.de',
-    'version': '1.3.1',
+    'version': kazookid.__version__,
     'tests_require': ['nose'],
     'packages': ['kazookid'],
     'scripts': [],
