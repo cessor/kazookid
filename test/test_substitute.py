@@ -217,6 +217,7 @@ def test_yields():
 
 
 def test_call_intercepts_argument_tuples():
+    '''Substitute: How to intercept method arguments'''
 
     # System under Test
     substitute = Substitute()
@@ -227,3 +228,96 @@ def test_call_intercepts_argument_tuples():
     # Assert
     assert_equal(substitute.method.args, (0, []))
     assert_true(substitute.method.was_called_with(0, []))
+
+
+def test_substitutes_can_act_as_dictionaries():
+    '''Substitute: How to subsitute a dictionary'''
+    # Arrange
+    key = 'key'
+    value = 42
+
+    # System under Test
+    substitute = Substitute()
+
+    # Act: Configure
+    substitute[key] = value
+
+    # Act: Run
+    actual_value = substitute['key']
+
+    # Assert
+    assert_equal(actual_value, 42)
+
+
+@raises(KeyError)
+def test_substitute_dictionaries_raise_keyerrors():
+    '''Substitute: Dictionary substitutes raise key errors like normal'''
+    # Arrange
+    key = 'key'
+    value = 42
+
+    # System under Test
+    substitute = Substitute()
+
+    # Act: Run
+    actual_value = substitute['key']
+
+    # Assert
+    # Raises KeyError
+
+
+def test_substitute_dictionaries_can_use_get_normally():
+    '''Substitute: How to use dict.get'''
+
+    # Arrange
+    key = 'key'
+    value = 42
+
+    # System under Test
+    substitute = Substitute()
+
+    # Act: Configure
+    substitute.get.returns(42)
+
+    # Act: Run
+    actual_value = substitute.get('key', None)
+
+    # Assert
+    assert_equal(actual_value, 42)
+
+
+def test_substitute_dictionaries_return_confiured_dictionary_values():
+    '''Substitute: dict.get returns values configured by __setitem__'''
+
+    # Arrange
+    key = 'key'
+    value = 42
+
+    # System under Test
+    substitute = Substitute()
+
+    # Act: Configure
+    substitute[key] = value
+
+    # Act: Run
+    actual_value = substitute.get('key', None)
+
+    # Assert
+    assert_equal(actual_value, 42)
+
+
+def test_substitute_dictionaries_but_only_if_configured():
+    '''Substitute: dict.get returns nothing if the value was not configured with __setitem__'''
+
+    # Arrange
+    key = 'key'
+    value = 42
+
+    # System under Test
+    substitute = Substitute()
+
+    # Act: Run
+    actual_value = substitute.get('key', None)
+
+    # Assert
+    assert_equal(actual_value, None)

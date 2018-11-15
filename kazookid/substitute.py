@@ -51,6 +51,13 @@ class Substitute(object):
         self._calls = {}
         self._config = {}
         self._iterator = Iterator()
+        self._dict = {}
+
+    def __setitem__(self, key, value):
+        self._dict[key] = value
+
+    def __getitem__(self, key):
+        return self._dict[key]
 
     def __getattr__(self, name):
         if name == 'yields':
@@ -86,7 +93,14 @@ class Call(object):
         self.exception = None
 
     def __call__(self, *args, **kwargs):
+
         if self.exception:
+            # Todo: This constructs a new exception by calling the
+            # object as a function, but often
+            # it is better to configure the exception beforehand
+            # and then just have the configured object raised.
+            # This line here assumes the exception has an empty ctor
+            # which is limiting in many tests...
             raise self.exception()
 
         # Calls are registered by
@@ -95,6 +109,12 @@ class Call(object):
         self.parent._calls.setdefault(self.name, []).append((args, kwargs))
 
         try:
+            # Todo: Not sure if this is sensible.
+            # Should I only ever return [0] here?
+            # I know I am limiting the scope of this tool
+            # but is this meaningful? God I should write
+            # more comments about my decisions - JCNH, 15.11.2018
+            # PS: At least it's tested.
             return self.return_value[0]
         except:
             return None
@@ -139,12 +159,18 @@ class Call(object):
         '''
         Configure this call to raise an exeption
         '''
+        # Todo:
+        # This should really typecheck if the passed object
+        # is really an exception. Otherwise the code will throw an exception
+        # just not the one which was configured - but a
+        # ```TypeError: exceptions must derive from BaseException```
         self.exception = exception
 
     def returns(self, *args, **kwargs):
         '''
         Configure this call to return some data
         '''
+        # Todo: Deal with kwargs
         self.return_value = args
 
     @property
@@ -164,6 +190,10 @@ class Call(object):
         '''
         Returns whether this call was invoked with these ```arguments```.
         '''
+        # Todo: Deal with kwargs.
+        # Also I am not sure the tests really cover calling the method
+        # multiple times properly...
+        # Use this sparingly, for it creates brittle tests...
         args = self._unpack(args)
         return (args == self.args) or (args in self.args)
 
@@ -174,6 +204,11 @@ class Iterator(object):
         self._items = []
 
     def __iter__(self):
+        # Note: I am not using
+        # Yield from here, because caused problems in
+        # Python 2.7 code, obviously.
+        # However, I am not actively testing for such
+        # compatibility.
         return self._items.__iter__()
 
     def __call__(self, items):
