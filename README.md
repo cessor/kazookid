@@ -1,6 +1,8 @@
 Kazookid
 ========
 
+[![Build Status](https://travis-ci.org/cessor/kazookid.svg?branch=master)](https://travis-ci.org/cessor/kazookid)
+
 This library allows you to create objects that impersonate other objects:
 
 ```
@@ -12,7 +14,6 @@ program.save('content')
 
 assert_true(path.write_text.was_called_with('content'))
 ```
-
 
 Where can I use that?
 ---------------------
